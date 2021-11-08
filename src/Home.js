@@ -14,7 +14,8 @@ import {
     ListItemText,
     Typography,
     ListSubheader,
-    Grid
+    Grid,
+    Switch
 
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -28,12 +29,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import HistoryIcon from '@mui/icons-material/History';
 import AddCircle from '@mui/icons-material/AddCircle';
+import { useTheme } from '@material-ui/core/styles';
 
 
 // Arrow function com o makeStyles recupera tudo o que está no theme(definido no app.js).
 const useStyles = makeStyles((theme) => ({
     root: { 
       height: '100vh',
+      backgroundColor: theme.palette.background.body
     },
     appBar: {
         boxShadow: 'none',
@@ -154,8 +157,9 @@ const videos = [
     },
   ];
 
-function Home() {
+function Home({ darkMode, setDarkMode }) {
     const classes = useStyles();
+    const theme = useTheme();
 
     return (
         <div className={classes.root}>
@@ -165,28 +169,37 @@ function Home() {
                         <IconButton
                             edge="start"
                             className={classes.menuIcon}
-                            color="inherit"
                             aria-label="menu"
                         >
                             <MenuIcon />
                         </IconButton>
-                        <img src="/images/preto.png" alt="logo" className={classes.logo} />
+                        <img
+                            src={
+                            theme.palette.type === 'dark'
+                                ? '/images/branco.png'
+                                : '/images/preto.png'
+                            }
+                            alt='logo'
+                            className={classes.logo}
+                        />
                         <div className={classes.grow}/>
+                        <Switch 
+                            value={darkMode}
+                            onChange={() => setDarkMode(!darkMode)}
+                            className={classes.icons}
+                        />
                         <IconButton
                             className={classes.icons}
-                            color="inherit"
                         >
                             <VideoCall />
                         </IconButton>
                         <IconButton
                             className={classes.icons}
-                            color="inherit"
                         >
                             <MoreVertIcon />
                         </IconButton>
                         <IconButton
                             className={classes.icons}
-                            color="inherit"
                         >
                             <AppsIcon />
                         </IconButton>
